@@ -1,29 +1,74 @@
 import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
+import {CalcularTotal} from "../Helper"
 
 const DivSecundario = styled.div`
-  grid-area: Centro;
-  display: grid;
-  grid-template-columns: 1fr 9fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-  grid-template-areas:
-  ""
-  ""
-  ""
-  "Button Button";
+    margin-top: 20px;
+    grid-area: Centro;
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+    "Label1 Select1"
+    "Label2 Select2"
+    "Div1 Div2"
+    "Button Button";
 `
 
-const Formulario = ({ setMarca, setYear, setPlan }) => {
+const Boton = styled.button`
+    border:5px;
+    border-style: outset;
+    border-color: #37ebe6;
+    background-color: #008B8B;
+    color: white;
+    grid-area: Button;
+`
+
+const Selection = styled.select`
+    height: 30px;
+    -webkit-appearance: menulist-button;
+`
+
+const Labeling = styled.label`
+    padding: 5px;
+    padding-right: 15px;
+`
+
+
+const Formulario = ({ marca, setMarca, year, setYear, plan, setPlan, setTotal }) => {
+    const handlerMarca = (e) => {
+        const marca = e.target.value;
+        setMarca(marca);
+    }
+
+    const handlerYear = (e) => {
+        const year = e.target.value;
+        setYear(year);
+    }
+
+    const handlerPlan = (e) => {
+        const plan = e.target.value;
+        setPlan(plan);
+    }
+
+    const handlerCotizar = (e) => {
+        if (marca && year && plan) {
+            console.log(marca, year, plan);
+            const total = CalcularTotal(marca, year, plan);
+            setTotal(total);
+        }
+    }
+
     return (
         <DivSecundario>
-            <label htmlFor="Marca">Marca</label>
-            <select name="Marca">
+            <Labeling className="Label1" htmlFor="Marca">Marca</Labeling>
+            <Selection className="Selection1" name="Marca" onClick={(e=>handlerMarca(e))}>
                 <option value="Americano">Americano</option>
                 <option value="Europeo">Europeo</option>
                 <option value="Asiatico">Asiatico</option>
-            </select>
-            <label htmlFor="Year">Año</label>
-            <select name="Year">
+            </Selection>
+            <Labeling className="Label2" htmlFor="Year">Año</Labeling>
+            <Selection className="Selection2" name="Year" onClick={(e=>handlerYear(e))}>
                 <option value="2021">2021</option>
                 <option value="2020">2020</option>
                 <option value="2019">2019</option>
@@ -46,15 +91,15 @@ const Formulario = ({ setMarca, setYear, setPlan }) => {
                 <option value="2002">2002</option>
                 <option value="2001">2001</option>
                 <option value="2000">2000</option>
-            </select>
-            <div>
-                Plan
-                <input type="radio" id="html" name="fav_language" value="HTML"/>
-                <label for="html">HTML</label>
-                <input type="radio" id="css" name="fav_language" value="CSS"/>
-                <label for="css">CSS</label>
+            </Selection>
+            <Labeling className="Label2" className="Div1" htmlFor="Div">Plan</Labeling>
+            <div className="Div2" name="Div">
+                <input type="radio" id="html" name="fav_language" value="Básico" onClick={(e=>handlerPlan(e))}/>
+                <label for="html">Básico</label>
+                <input type="radio" id="css" name="fav_language" value="Completo" onClick={(e=>handlerPlan(e))}/>
+                <label for="css">Completo</label>
             </div>
-            <button>Enviar</button>
+            <Boton className="Button2" onClick={(e)=>handlerCotizar(e)}>COTIZAR</Boton>
         </DivSecundario>
     );
 }
