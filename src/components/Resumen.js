@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from '@emotion/styled';
+import '../spinner.css';
 
 const DivTerciario = styled.div`
     margin-top: 10px;
@@ -15,13 +16,20 @@ const DivTerciario = styled.div`
     padding-bottom: 15px;
 `
 
-const Resumen = ({marca, year, plan}) => {
+const Resumen = ({ marca, year, plan, spinner }) => {
+
     return (
         <DivTerciario>
-            <h2>Resumen de Cotización</h2>
-            <p>Marca: {marca}</p>
-            <p>Plan: {plan}</p>
-            <p>Año del Auto: {year}</p>
+            {spinner ?
+                (<div class="spinner"></div>
+                ) : (
+                    <Fragment>
+                        <h2>Resumen de Cotización</h2>
+                        <p>Marca: {marca}</p>
+                        <p>Plan: {plan}</p>
+                        <p>Año del Auto: {year}</p>
+                </Fragment>
+                )}
         </DivTerciario>
     );
 }

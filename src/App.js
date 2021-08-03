@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css';
 import Formulario from "./components/Formulario";
 import Resumen from "./components/Resumen";
 import Total from "./components/Total";
@@ -31,6 +30,7 @@ function App() {
   const [year, setYear] = useState(2000);
   const [plan, setPlan] = useState("Básico");
   const [total, setTotal] = useState(0);
+  const [spinner, setSpinner] = useState(false);
 
   return (
     <DivPrincipal>
@@ -43,11 +43,13 @@ function App() {
         plan={plan}
         setPlan={setPlan}
         setTotal={setTotal}
+        setSpinner={setSpinner}
       />
       <Resumen
         marca={marca}
         year={year}
         plan={plan}
+        spinner={spinner}
       />
       <Total
         total={total}

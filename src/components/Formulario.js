@@ -35,7 +35,7 @@ const Labeling = styled.label`
 `
 
 
-const Formulario = ({ marca, setMarca, year, setYear, plan, setPlan, setTotal }) => {
+const Formulario = ({ marca, setMarca, year, setYear, plan, setPlan, setTotal, setSpinner }) => {
     const handlerMarca = (e) => {
         const marca = e.target.value;
         setMarca(marca);
@@ -53,22 +53,26 @@ const Formulario = ({ marca, setMarca, year, setYear, plan, setPlan, setTotal })
 
     const handlerCotizar = (e) => {
         if (marca && year && plan) {
-            console.log(marca, year, plan);
-            const total = CalcularTotal(marca, year, plan);
-            setTotal(total);
+            setSpinner(true);
+            setTotal(0);
+                setInterval(() => {
+                    setSpinner(false);
+                    const total = CalcularTotal(marca, year, plan);
+                    setTotal(total);
+                }, 3000);
         }
     }
 
     return (
         <DivSecundario>
             <Labeling className="Label1" htmlFor="Marca">Marca</Labeling>
-            <Selection className="Selection1" name="Marca" onClick={(e=>handlerMarca(e))}>
+            <Selection className="Selection1" name="Marca" onClick={(e)=>handlerMarca(e)}>
                 <option value="Americano">Americano</option>
                 <option value="Europeo">Europeo</option>
                 <option value="Asiatico">Asiatico</option>
             </Selection>
             <Labeling className="Label2" htmlFor="Year">Año</Labeling>
-            <Selection className="Selection2" name="Year" onClick={(e=>handlerYear(e))}>
+            <Selection className="Selection2" name="Year" onClick={(e)=>handlerYear(e)}>
                 <option value="2021">2021</option>
                 <option value="2020">2020</option>
                 <option value="2019">2019</option>
@@ -94,9 +98,9 @@ const Formulario = ({ marca, setMarca, year, setYear, plan, setPlan, setTotal })
             </Selection>
             <Labeling className="Label2" className="Div1" htmlFor="Div">Plan</Labeling>
             <div className="Div2" name="Div">
-                <input type="radio" id="html" name="fav_language" value="Básico" onClick={(e=>handlerPlan(e))}/>
+                <input type="radio" id="html" name="fav_language" value="Básico" onClick={(e)=>handlerPlan(e)}/>
                 <label for="html">Básico</label>
-                <input type="radio" id="css" name="fav_language" value="Completo" onClick={(e=>handlerPlan(e))}/>
+                <input type="radio" id="css" name="fav_language" value="Completo" onClick={(e)=>handlerPlan(e)}/>
                 <label for="css">Completo</label>
             </div>
             <Boton className="Button2" onClick={(e)=>handlerCotizar(e)}>COTIZAR</Boton>
